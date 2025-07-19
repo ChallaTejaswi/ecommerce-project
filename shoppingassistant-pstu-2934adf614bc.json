@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "shoppingassistant-pstu",
+  "private_key_id": "2934adf614bc081a39064dcc5d42ea2c3345c87e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCoE1IBCZc1yN8U\nf8tqrqGzUl0t2HmYOzvZ6uYpUmPXqVuEbAqe3jzhIJ5Q2ALeMxM6k25usMGFsdwQ\nCpmmJBWd+C07K9jBq2ZfMOuhng+qD/wdToGpKboHluuaoUEFON4MwhBZ9axWudds\nSehsI46Ev6asMKERpsR7s1/YeVBMgiX7Nc4wonlG8aP94s2NghB6qC5BeXOOSyhp\nXj1h90gbtZKKZsujx6wn5Ur2efwoQHNiyiSJd9+HbskRDhOYUbft/iW8wH/sFFtS\n2oEi6ew+mT22fs0zHF+aiSpVw/gYX7Ae6r/975KRfSaYHMeOVR+Rt5plARPqBtqT\nffigW6bnAgMBAAECggEAURs9q81+gBBmgkRnG5yY4GmDGJAJoWoYKEE//znIf3Y0\n+RKQD3kMJNFyRG3w+FvqUA58MIMwZ/1bxgvveGqaWeg8n3y5tT+qf44ibxPQ2E6t\naVEMpd7CbE4qdKyTLVtzX/G4JUk1+IXmzFVgCOshp7K6UgaHe3agA1ecjWCBXOF6\n1GyRODUkAAE18XPEJNdpyTw2GjtOnMTfNO3Q3xyzFDi5rizLVtiYtr7hxmvl+d7o\nCXvBaM8GcWVNuySwBiZbazZCM2XvE1S5K/69RZ6rSw52aztP6HkUhaEU4zr8Qs9e\nClr562PyE9v05WcoQ5w62B5tJ6O2sdoIT5Y6jU3vNQKBgQDZ7q4sKZ/S9KbBQg2H\noOjuSAczc+rjUSbz4bM2tuQONhbzVkTO2ROVuFFsYWsnlf0WxcCy/qoToN6aG38R\ng94riKvmDkt9O6WoS+qrOZDqg5dN/Qj/jI9f8MzyC8wRlnlnXiBs36FgxjTPrHDo\n/bYnyE529iDSNRAE+pOIT+3C0wKBgQDFby5hFMOx/SRunAHIAGz++v1ctpjO/ybu\n7dLMDgyAfu1nmQFn8uHXtw+6EIBPrpVg3ClLCgFMFNWzMfltoLnYuXoMFqKcxjuw\nufb6HtJspuoT0DE+bJKE8v/023bRXJDK+a4TbRF7+MRAbCNuag28kzO+Sv0zYwPs\nF3TVUOH3HQKBgF+/6DJrD1dmOiXK2ZrvbafTaaaHlXnOW+jnDxBJBqXfyfGbw5uF\n8H7lfpC5tJSt54ar1+BM13jMQ0E+N3QAlgpWgAAR48TgAgaRZEdagXsn2cBgHiX5\nIb0rVUA7QquviyOJTYHIN2UHcIiV4P3dCr0r2p2VwhHZUnJ9jXhkdbgVAoGAAij2\nO++rOG5JkMA6MML4bk22qeYBg/o8pc6KSNs6fclltYVyA34fxGlnTaTSkoyZa8bc\n2MpSO0/bCqvYS7+/aMSWtj0lKEvu6T8PmaruqGunEfJsJ3+ulq/F5xrjkOTPXLkg\nk2vVDiMpmn7UYGfeoJqHrWRKot5Jc7LJ/290GW0CgYEAsTirDVMnP5J5ZUVO+hLV\nS4+wV9nzi022Feqj87Qv6lusFdokB6seszOdgqyBljlnCI45LwvWF/kKWD+t/au7\n/NA19eExKgdJvhOwZoDLUGJ6NlZ/LB5LiG1n7MgGYpuRshgOHM0sHzHVxAiDTtCL\n3gSeEwSJXtxWNpbhNgp9Umc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-client@shoppingassistant-pstu.iam.gserviceaccount.com",
+  "client_id": "117823227105807715593",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-client%40shoppingassistant-pstu.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

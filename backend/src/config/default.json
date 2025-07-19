@@ -1,0 +1,44 @@
+{
+  "server": {
+    "port": 3000,
+    "environment": "development"
+  },
+  "database": {
+    "name": "meesho_shopping_assistant",
+    "host": "localhost",
+    "port": 27017
+  },
+  "dialogflow": {
+    "languageCode": "en",
+    "sessionPath": "projects/{projectId}/agent/sessions/{sessionId}"
+  },
+  "ml": {
+    "recommendationService": {
+      "url": "http://localhost:5000",
+      "timeout": 5000
+    },
+    "sentimentAnalysis": {
+      "url": "http://localhost:5001",
+      "timeout": 3000
+    }
+  },
+  "pagination": {
+    "defaultLimit": 20,
+    "maxLimit": 100
+  },
+  "cache": {
+    "ttl": 3600,
+    "checkPeriod": 600
+  },
+  "flows": {
+    "regular_ivr": {
+      "max_interactions": 5,
+      "escalation_triggers": ["repeated_failure", "negative_sentiment"]
+    },
+    "ava_flow": {
+      "advanced_nlp": true,
+      "context_retention": true,
+      "max_complexity_score": 8
+    }
+  }
+}

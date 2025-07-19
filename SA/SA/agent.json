@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "language": "en",
+  "shortDescription": "",
+  "examples": "",
+  "disableInteractionLogs": false,
+  "disableStackdriverLogs": true,
+  "defaultTimezone": "Asia/Kolkata",
+  "isPrivate": true,
+  "mlMinConfidence": 0.3,
+  "supportedLanguages": ["hi", "gu", "te"],
+  "multiLanguageAgent": true
+}

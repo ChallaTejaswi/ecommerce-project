@@ -1,0 +1,46 @@
+{
+  "name": "ProductSearchIntent",
+  "auto": true,
+  "responses": [
+    {
+      "resetContexts": false,
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Sure! Here is our product catalog.",
+            "Here are some options you might like."
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "hi",
+          "speech": [
+            "ज़रूर! यह हमारा प्रोडक्ट कैटलॉग है।",
+            "यहाँ कुछ विकल्प हैं जो आपको पसंद आ सकते हैं।"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "gu",
+          "speech": [
+            "ખરેખર! અહીં અમારો પ્રોડક્ટ કેટલોગ છે.",
+            "અહીં કેટલાક વિકલ્પો છે જે તમને ગમશે."
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "te",
+          "speech": [
+            "తప్పకుండా! ఇది మా ఉత్పత్తుల క్యాటలాగ్.",
+            "ఇక్కడ మీరు ఇష్టపడే కొన్ని ఎంపికలు ఉన్నాయి."
+          ]
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "fallbackIntent": false
+}

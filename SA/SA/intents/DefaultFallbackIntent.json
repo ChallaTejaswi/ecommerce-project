@@ -1,0 +1,46 @@
+{
+  "name": "DefaultFallbackIntent",
+  "auto": true,
+  "responses": [
+    {
+      "resetContexts": false,
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Sorry, I didn’t understand that. Could you please rephrase?",
+            "I’m not sure what you mean. Can you try again?"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "hi",
+          "speech": [
+            "माफ़ करें, मैं समझ नहीं पाया। कृपया दोहराएँ।",
+            "मुझे समझ नहीं आया। फिर से बताएं।"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "gu",
+          "speech": [
+            "માફ કરશો, હું સમજી શક્યો નહીં. ફરી કહો.",
+            "મને સમજાયું નહીં. ફરીથી કહો."
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "te",
+          "speech": [
+            "క్షమించండి, నాకు అర్థం కాలేదు. మరల చెప్పగలరా?",
+            "నాకు అర్థం కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి."
+          ]
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "fallbackIntent": true
+}

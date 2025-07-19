@@ -1,0 +1,12 @@
+[
+  { "data": [{ "text": "Recommend me something" }] },
+  { "data": [{ "text": "What do you suggest?" }] },
+  { "data": [{ "text": "Suggest me products" }] },
+  { "data": [{ "text": "What are the best deals?" }] },
+  { "data": [{ "text": "Any recommendations?" }] },
+  { "data": [{ "text": "Show me offers" }] },
+  { "data": [{ "text": "I need suggestions" }] },
+  { "data": [{ "text": "Tell me recommended products" }] },
+  { "data": [{ "text": "Best products for me?" }] },
+  { "data": [{ "text": "Any special deals?" }] }
+]

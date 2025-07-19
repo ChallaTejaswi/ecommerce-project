@@ -1,0 +1,46 @@
+{
+  "name": "DefaultWelcomeIntent",
+  "auto": true,
+  "responses": [
+    {
+      "resetContexts": false,
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Hello! How can I help you today?",
+            "Hi there! What can I do for you?"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "hi",
+          "speech": [
+            "नमस्ते! मैं आपकी कैसे मदद कर सकता हूँ?",
+            "हाय! बताएं मैं क्या कर सकता हूँ?"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "gu",
+          "speech": [
+            "નમસ્તે! હું તમને કેવી રીતે મદદ કરી શકું?",
+            "હાય! હું તમારા માટે શું કરી શકું?"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "te",
+          "speech": [
+            "నమస్తే! నేను ఎలా సహాయం చేయగలను?",
+            "హాయ్! నేను ఏమి చేయగలను?"
+          ]
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "fallbackIntent": false
+}

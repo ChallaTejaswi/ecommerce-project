@@ -1,0 +1,12 @@
+[
+  { "data": [ { "text": "Show me your catalog" } ] },
+  { "data": [ { "text": "I want to see products" } ] },
+  { "data": [ { "text": "What products do you sell?" } ] },
+  { "data": [ { "text": "Do you have shoes?" } ] },
+  { "data": [ { "text": "Show me dresses" } ] },
+  { "data": [ { "text": "Display product list" } ] },
+  { "data": [ { "text": "Product catalog" } ] },
+  { "data": [ { "text": "Products" } ] },
+  { "data": [ { "text": "Available products" } ] },
+  { "data": [ { "text": "Suggest products" } ] }
+]

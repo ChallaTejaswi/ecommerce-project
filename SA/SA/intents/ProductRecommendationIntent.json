@@ -1,0 +1,46 @@
+{
+  "name": "ProductRecommendationIntent",
+  "auto": true,
+  "responses": [
+    {
+      "resetContexts": false,
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "Based on your preferences, here are some product recommendations.",
+            "You might like these deals."
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "hi",
+          "speech": [
+            "आपकी पसंद के अनुसार, ये उत्पाद सुझाए जाते हैं।",
+            "आपको ये डील्स पसंद आ सकती हैं।"
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "gu",
+          "speech": [
+            "તમારી પસંદ મુજબ આ પ્રોડક્ટ્સ ભલામણ કરેલ છે.",
+            "આ ડીલ્સ તમને ગમશે."
+          ]
+        },
+        {
+          "type": 0,
+          "lang": "te",
+          "speech": [
+            "మీ అభిరుచులకు అనుగుణంగా ఇవి సిఫార్సు చేస్తున్నాము.",
+            "మీకు ఇవి నచ్చవచ్చు."
+          ]
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "fallbackIntent": false
+}

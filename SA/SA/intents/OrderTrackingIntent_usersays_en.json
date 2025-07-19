@@ -1,0 +1,12 @@
+[
+  { "data": [{ "text": "Where is my order?" }] },
+  { "data": [{ "text": "Track my order" }] },
+  { "data": [{ "text": "Order status" }] },
+  { "data": [{ "text": "Has my order shipped?" }] },
+  { "data": [{ "text": "Check delivery status" }] },
+  { "data": [{ "text": "Is my order out for delivery?" }] },
+  { "data": [{ "text": "Tell me my order status" }] },
+  { "data": [{ "text": "When will I get my order?" }] },
+  { "data": [{ "text": "Order tracking" }] },
+  { "data": [{ "text": "Delivery details" }] }
+]
