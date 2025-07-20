@@ -18,6 +18,10 @@ Backend Health Check Route
 ```bash
 https://ecommerce-project-1-gm35.onrender.com/health
 ```
+Admin Panel
+```bash
+https://ecommerce-project-x8jv.vercel.app/admin
+```
 
 ## Project Overview
 A full-stack conversational shopping assistant for Meesho, featuring:
@@ -75,7 +79,7 @@ cd backend && npm run dev
 cd ../frontend && npm start
 ```
 
-### 6. Access the app
+### 6. Access the app From Localhost
 - Frontend: `http://localhost:3000`
 - Backend API: `http://localhost:7654`
 - Admin Panel: `http://localhost:3000/admin`
