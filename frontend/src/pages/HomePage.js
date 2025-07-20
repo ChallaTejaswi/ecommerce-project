@@ -13,7 +13,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:7654/api/products');
+        const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/products');
         if (response.data.success) {
           setProducts(response.data.products);
         }

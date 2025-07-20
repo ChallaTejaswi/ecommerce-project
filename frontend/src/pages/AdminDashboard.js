@@ -42,7 +42,7 @@ const AdminDashboard = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('admin_token');
-      const response = await axios.get('http://localhost:7654/api/admin/orders', {
+      const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/admin/orders', {
         headers: { Authorization: `Bearer ${token}` },
         params: filters
       });
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('admin_token');
-      const response = await axios.get('http://localhost:7654/api/admin/analytics', {
+      const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/admin/analytics', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   const handleStatusUpdate = async (orderId) => {
     try {
       const token = localStorage.getItem('admin_token');
-      await axios.put(`http://localhost:7654/api/admin/orders/${orderId}/status`, statusUpdate, {
+      await axios.put(`https://ecommerce-project-1-gm35.onrender.com/api/admin/orders/${orderId}/status`, statusUpdate, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

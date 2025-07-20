@@ -20,7 +20,7 @@ const OrdersPage = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('meesho_token');
-      const response = await axios.get('http://localhost:7654/api/orders', {
+      const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/orders', {
         headers: {
           Authorization: `Bearer ${token}`
         }

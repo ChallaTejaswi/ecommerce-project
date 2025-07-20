@@ -133,7 +133,7 @@ const ChatWindow = () => {
           const token = localStorage.getItem('meesho_token');
           // Use the same endpoint as the cart page to get recommendations
           const recommendationsResponse = await axios.get(
-            'http://localhost:7654/api/cart',
+            'https://ecommerce-project-1-gm35.onrender.com/api/cart',
             {
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -189,7 +189,7 @@ const ChatWindow = () => {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await axios.post('http://localhost:7654/api/webhook', {
+      const response = await axios.post('https://ecommerce-project-1-gm35.onrender.com/api/webhook', {
         queryResult: {
           queryText: messageText,
           languageCode: selectedLanguage // Always include selected language

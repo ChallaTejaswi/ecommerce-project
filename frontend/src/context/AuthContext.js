@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:7654/api';
+const API_BASE_URL = 'https://ecommerce-project-1-gm35.onrender.com/api';
 
 const AuthContext = createContext();
 

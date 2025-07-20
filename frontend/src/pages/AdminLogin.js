@@ -27,7 +27,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:7654/api/admin/login', credentials);
+      const response = await axios.post('https://ecommerce-project-1-gm35.onrender.com/api/admin/login', credentials);
       if (response.data.success) {
         localStorage.setItem('admin_token', response.data.token);
         localStorage.setItem('admin_user', JSON.stringify(response.data.admin));

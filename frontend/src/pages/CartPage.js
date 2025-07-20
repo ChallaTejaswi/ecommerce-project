@@ -32,7 +32,7 @@ const CartPage = () => {
       if (!isAuthenticated || !user?.id) return;
       try {
         // Fetch recommendations from cart API
-        const response = await axios.get('http://localhost:7654/api/cart');
+        const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/cart');
         // Use response.data.data.recommendations for both fallback and ML recommendations
         const recs = response.data?.data?.recommendations || [];
         setRecommendations(recs.slice(0, 5));
@@ -53,7 +53,7 @@ const CartPage = () => {
       
       // Add each cart item to backend if not already there
       for (const item of cartItems) {
-        await axios.post('http://localhost:7654/api/cart/add', {
+        await axios.post('https://ecommerce-project-1-gm35.onrender.com/api/cart/add', {
           productId: item.id,
           quantity: item.quantity,
           addedVia: 'manual', // Use valid enum value
@@ -81,7 +81,7 @@ const CartPage = () => {
       }
 
       console.log('🔄 Fetching ML cart data...');
-      const response = await axios.get('http://localhost:7654/api/cart', {
+      const response = await axios.get('https://ecommerce-project-1-gm35.onrender.com/api/cart', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -164,7 +164,7 @@ const CartPage = () => {
       if (!token) return;
 
       // Add to backend cart with ML tracking
-      await axios.post('http://localhost:7654/api/cart/add', {
+      await axios.post('https://ecommerce-project-1-gm35.onrender.com/api/cart/add', {
         productId: product.id,
         quantity: 1,
         addedVia: 'recommendation', // Use valid enum value
@@ -226,7 +226,7 @@ const CartPage = () => {
       };
 
       const token = localStorage.getItem('meesho_token') || 'dummy_token';
-      const response = await axios.post('http://localhost:7654/api/orders', orderData, {
+      const response = await axios.post('https://ecommerce-project-1-gm35.onrender.com/api/orders', orderData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

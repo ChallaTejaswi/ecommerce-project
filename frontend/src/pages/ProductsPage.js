@@ -4,7 +4,7 @@ import axios from 'axios';
 import './ProductsPage.css';
 
 // Define your API base URL here, similar to what we did in AuthContext
-const API_BASE_URL = 'http://localhost:7654/api'; // Adjust if your backend API path changes
+const API_BASE_URL = 'https://ecommerce-project-1-gm35.onrender.com/api'; // Adjust if your backend API path changes
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
