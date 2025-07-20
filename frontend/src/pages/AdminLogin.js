@@ -10,6 +10,7 @@ const AdminLogin = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,7 +28,6 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post('http://localhost:7654/api/admin/login', credentials);
-      
       if (response.data.success) {
         localStorage.setItem('admin_token', response.data.token);
         localStorage.setItem('admin_user', JSON.stringify(response.data.admin));
@@ -35,6 +35,7 @@ const AdminLogin = () => {
       }
     } catch (error) {
       setError(error.response?.data?.message || 'Login failed');
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -42,6 +43,15 @@ const AdminLogin = () => {
 
   return (
     <div className="admin-login-container">
+      {showErrorModal && (
+        <div className="modal-overlay" onClick={() => setShowErrorModal(false)}>
+          <div className="modal-content">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button onClick={() => setShowErrorModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
       <div className="admin-login-card">
         <div className="admin-login-header">
           <h1>🛍️ Meesho Admin</h1>

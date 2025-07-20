@@ -288,10 +288,8 @@ const ChatWindow = () => {
 
   const quickActions = [
     { text: "Show me dresses", action: () => sendMessage("Show me dresses") },
-    { text: "Find phones", action: () => sendMessage("Find phones under 20000") },
     { text: "Recommend for me", action: () => sendMessage("Recommend products for me") },
-    { text: "Track order", action: () => sendMessage("Track my order") },
-    { text: "Help", action: () => sendMessage("I need help") }
+    { text: "Track order", action: () => sendMessage("Track my order") }
   ];
 
   return (
@@ -416,6 +414,22 @@ const ChatWindow = () => {
                             {order.status.replace(/_/g, ' ').toUpperCase()}
                           </span>
                         </div>
+                        {/* Show product images for each order */}
+                        {order.items && order.items.length > 0 && (
+                          <div className="order-summary-images">
+                            {order.items.map((item, idx) => (
+                              item.image ? (
+                                <img
+                                  key={idx}
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="order-summary-item-image"
+                                  style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '4px', borderRadius: '4px' }}
+                                />
+                              ) : null
+                            ))}
+                          </div>
+                        )}
                         <div className="order-summary-details">
                           <span className="order-total">₹{order.pricing?.total || order.total}</span>
                           <span className="order-date">{new Date(order.createdAt).toLocaleDateString('en-IN')}</span>

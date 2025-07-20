@@ -13,10 +13,24 @@ class OrderService {
 
   async getOrdersByUserId(userId, limit = 20, skip = 0) {
     try {
-      return await Order.find({ userId })
+      let orders = await Order.find({ userId })
         .sort({ createdAt: -1 })
         .limit(limit)
         .skip(skip);
+
+      // Enrich each order's items with product images if missing
+      const productService = require('./productService');
+      for (const order of orders) {
+        for (const item of order.items) {
+          if (!item.image) {
+            const product = await productService.getProductById(item.productId);
+            if (product && product.images && product.images.length > 0) {
+              item.image = product.images[0];
+            }
+          }
+        }
+      }
+      return orders;
     } catch (error) {
       logger.error('Get orders by user ID error:', error);
       throw error;

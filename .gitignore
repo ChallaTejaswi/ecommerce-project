@@ -2,7 +2,7 @@
 node_modules/
 frontend/node_modules/
 backend/node_modules/
-
+backend/config/dialogflow-service-account.json
 # Optional: Other common files/folders to ignore
 build/
 dist/

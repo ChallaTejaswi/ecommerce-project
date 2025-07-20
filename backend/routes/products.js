@@ -6,7 +6,7 @@ const uuid = require('uuid');
 const path = require('path');
 
 // Path to your Dialogflow service account key
-const keyFilePath = path.join(__dirname, '../../shoppingassistant-pstu-2934adf614bc.json');
+const keyFilePath = path.resolve(__dirname, '../../config/dialogflow-service-account.json');
 const projectId = 'shoppingassistant-pstu';
 
 // Get all products from database

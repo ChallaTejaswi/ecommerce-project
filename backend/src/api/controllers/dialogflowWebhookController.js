@@ -13,46 +13,33 @@ class DialogflowWebhookController {
       const { intent, parameters, queryText, languageCode } = queryResult;
       const intentName = intent.displayName;
 
-      // 1. Detect user language (prefer frontend, else auto-detect)
+      console.log('👉 Received intent from Dialogflow:', intentName);
+
+      // Detect user language
       let userLang = languageCode && languageCode !== 'und' ? languageCode : null;
       if (!userLang) {
-        userLang = await detectLanguage(queryText);
+        userLang = await detectLanguage(queryText) || 'en';
       }
-      if (!userLang) userLang = 'en';
 
-      // 2. Translate user input to English if needed
+      // Translate query to English if needed
       let translatedQuery = queryText;
-      console.log('🟢 [DF] About to call translate:', { queryText, userLang });
       if (userLang !== 'en') {
         try {
           translatedQuery = await translate(queryText, userLang, 'en');
         } catch (err) {
-          logger.error('Translation to English failed, using original:', err);
-          translatedQuery = queryText;
+          logger.error('Translation to English failed:', err);
         }
       }
-      console.log('🟢 [DF] Finished translate:', translatedQuery);
 
-      // Extract session ID
       const sessionId = this.extractSessionId(session);
-
-      // Analyze sentiment and context (use translated query for intent/sentiment)
       const sentiment = await nlpService.analyzeSentiment(translatedQuery);
       const conversationContext = await this.getConversationContext(sessionId);
-
-      // Determine flow type based on complexity and context
-      const flowType = await this.determineFlowType(
-        intentName,
-        parameters,
-        conversationContext,
-        sentiment
-      );
+      const flowType = await this.determineFlowType(intentName, parameters, conversationContext, sentiment);
 
       let response;
 
-      // Recommendation intent handling
-      if (intentName && intentName.toLowerCase().includes('recommend')) {
-        // Get userId from request if available
+      // 🎯 Handle recommendation intent here
+      if (intentName.toLowerCase().includes('recommend')) {
         const userId = req.body.userId || parameters.userId || null;
         let recommendations = [];
         if (userId) {
@@ -61,7 +48,12 @@ class DialogflowWebhookController {
             sessionQueries: parameters.sessionQueries || []
           });
         }
-        // Format as product cards for frontend
+
+        let fulfillmentText = 'Here are your personalized recommendations:';
+        if (userLang !== 'en') {
+          fulfillmentText = await translate(fulfillmentText, 'en', userLang);
+        }
+
         const fulfillmentMessages = recommendations.map(product => ({
           card: {
             title: product.name,
@@ -73,206 +65,82 @@ class DialogflowWebhookController {
             ]
           }
         }));
-        let fulfillmentText = 'Here are your personalized recommendations:';
-        // Translate response if needed
-        if (userLang && userLang !== 'en' && fulfillmentText) {
-          try {
-            fulfillmentText = await translate(fulfillmentText, 'en', userLang);
-          } catch (err) {
-            logger.error('Translation to user language failed, using English:', err);
-          }
-        }
-        res.json({
-          fulfillmentText,
-          fulfillmentMessages,
-          products: recommendations
-        });
-        return;
+
+        return res.json({ fulfillmentText, fulfillmentMessages, products: recommendations });
       }
 
+      // 🎯 Otherwise, delegate to flow services
       if (flowType === 'ava_flow') {
-        // Handle with Advanced Virtual Agent
-        console.log('🟢 [DF] About to call avaFlowService.handleIntent');
-        response = await avaFlowService.handleIntent(
-          intentName,
-          parameters,
-          translatedQuery,
-          sessionId,
-          conversationContext,
-          sentiment,
-          userLang
-        );
-        console.log('🟢 [DF] Finished avaFlowService.handleIntent');
+        response = await avaFlowService.handleIntent(intentName, parameters, translatedQuery, sessionId, conversationContext, sentiment, userLang);
       } else {
-        // Handle with Regular IVR Flow
-        console.log('🟢 [DF] About to call ivrFlowService.handleIntent');
-        response = await ivrFlowService.handleIntent(
-          intentName,
-          parameters,
-          translatedQuery,
-          sessionId,
-          conversationContext,
-          userLang
-        );
-        console.log('🟢 [DF] Finished ivrFlowService.handleIntent');
+        response = await ivrFlowService.handleIntent(intentName, parameters, translatedQuery, sessionId, conversationContext, userLang);
       }
 
-      // 3. Translate bot response back to user's language if needed
+      // Fallback if service didn’t handle intent
+      if (!response || !response.fulfillmentText) {
+        response = {
+          fulfillmentText: "Sorry, I couldn't understand that request.",
+          fulfillmentMessages: []
+        };
+      }
+
+      // Translate response back if needed
       let fulfillmentText = response.fulfillmentText;
-      console.log('🟢 [DF] About to call translate for response:', { fulfillmentText, userLang });
-      if (userLang && userLang !== 'en' && fulfillmentText) {
+      if (userLang !== 'en' && fulfillmentText) {
         try {
           fulfillmentText = await translate(fulfillmentText, 'en', userLang);
         } catch (err) {
-          logger.error('Translation to user language failed, using English:', err);
+          logger.error('Failed to translate response to user language:', err);
         }
       }
-      console.log('🟢 [DF] Finished translate for response:', fulfillmentText);
 
-      // Log conversation
-      await this.logConversation(sessionId, intentName, queryText, response, sentiment, flowType);
+      //await this.logConversation(sessionId, intentName, queryText, response, sentiment, flowType);
 
-      // --- BEGIN: Add products array for frontend chatbot if recommendations are present ---
-      let products = null;
-      // Check if the response contains recommendation cards in fulfillmentMessages
-      if (response.fulfillmentMessages && Array.isArray(response.fulfillmentMessages)) {
-        // Find card messages
-        const cards = response.fulfillmentMessages.filter(msg => msg.card);
-        if (cards.length > 0) {
-          products = cards.map(cardMsg => {
-            const card = cardMsg.card;
-            // Try to extract productId from postback or fallback to title
-            let productId = null;
-            if (card.buttons && Array.isArray(card.buttons)) {
-              const viewBtn = card.buttons.find(btn => btn.postback && btn.postback.startsWith('product_details_'));
-              if (viewBtn) {
-                productId = viewBtn.postback.replace('product_details_', '');
-              }
-            }
-            return {
-              id: productId || card.title,
-              name: card.title,
-              price: card.subtitle ? card.subtitle.split(' ')[0].replace('₹','') : '',
-              image: card.imageUri,
-              brand: card.subtitle && card.subtitle.includes('-') ? card.subtitle.split('-').slice(1).join('-').trim() : '',
-            };
-          });
+      // If response contains orders (for order history), send them as a structured array for frontend
+      let orders = null;
+      if (response.fulfillmentMessages) {
+        const ordersMsg = response.fulfillmentMessages.find(msg => msg.type === 'orders_list');
+        if (ordersMsg && Array.isArray(ordersMsg.orders)) {
+          orders = ordersMsg.orders;
         }
       }
-      // --- END: Add products array for frontend chatbot ---
 
-      console.log('🟢 [DF] About to send response');
-      // Truncate fulfillmentText to 256 chars
-      if (fulfillmentText && fulfillmentText.length > 256) {
-        fulfillmentText = fulfillmentText.slice(0, 253) + '...';
-      }
-      // Truncate card fields in fulfillmentMessages
-      let fulfillmentMessages = response.fulfillmentMessages || [];
-      if (Array.isArray(fulfillmentMessages)) {
-        fulfillmentMessages.forEach(msg => {
-          if (msg.card) {
-            if (msg.card.title && msg.card.title.length > 256)
-              msg.card.title = msg.card.title.slice(0, 253) + '...';
-            if (msg.card.subtitle && msg.card.subtitle.length > 256)
-              msg.card.subtitle = msg.card.subtitle.slice(0, 253) + '...';
-            if (Array.isArray(msg.card.buttons)) {
-              msg.card.buttons.forEach(btn => {
-                if (btn.text && btn.text.length > 256)
-                  btn.text = btn.text.slice(0, 253) + '...';
-              });
-            }
-          }
-        });
-      }
-      // Minimal response for debugging
       res.json({
         fulfillmentText,
-        fulfillmentMessages,
-        products
+        fulfillmentMessages: response.fulfillmentMessages || [],
+        products: response.products || null,
+        orders: orders // structured orders array for chat window
       });
 
-    } catch (error) {
-      logger.error('Webhook error:', error);
+    } catch (err) {
+      logger.error('Webhook error:', err);
       res.json({
-        fulfillmentText: 'I apologize, but I\'m experiencing technical difficulties. Please try again in a moment.'
+        fulfillmentText: "I apologize, but I'm experiencing technical difficulties. Please try again."
       });
     }
   }
 
+  // 🩷 Voice webhook (optional)
   async handleVoiceWebhook(req, res) {
     try {
       const response = await this.handleWebhook(req, res);
-      
-      // Add SSML for voice responses
-      if (response.fulfillmentText) {
+      if (response?.fulfillmentText) {
         response.fulfillmentText = `<speak>${response.fulfillmentText}</speak>`;
       }
-
       return response;
-    } catch (error) {
-      logger.error('Voice webhook error:', error);
+    } catch (err) {
+      logger.error('Voice webhook error:', err);
       res.json({
-        fulfillmentText: '<speak>I apologize, but I\'m having trouble with voice processing right now.</speak>'
+        fulfillmentText: "<speak>Sorry, I'm having trouble with voice processing at the moment.</speak>"
       });
     }
   }
 
-  async determineFlowType(intentName, parameters, context, sentiment) {
-    // Escalation triggers for AVA flow
-    const avaFlowTriggers = [
-      'support.escalate',
-      'complaint.complex',
-      'order.dispute',
-      'payment.issue'
-    ];
-
-    // Check for explicit AVA triggers
-    if (avaFlowTriggers.includes(intentName)) {
-      return 'ava_flow';
-    }
-
-    // Check for negative sentiment patterns
-    if (sentiment === 'very_negative' || sentiment === 'negative') {
-      return 'ava_flow';
-    }
-
-    // Check for repeated failures in context
-    if (context.failureCount >= 2) {
-      return 'ava_flow';
-    }
-
-    // Check for complex parameters or multi-intent queries
-    const complexityScore = this.calculateComplexityScore(parameters, context);
-    if (complexityScore > 7) {
-      return 'ava_flow';
-    }
-
-    return 'regular_ivr';
-  }
-
-  calculateComplexityScore(parameters, context) {
-    let score = 0;
-    
-    // Count number of parameters
-    score += Object.keys(parameters).length;
-    
-    // Add score for conversation length
-    score += Math.min(context.conversationLength || 0, 5);
-    
-    // Add score for multiple intents in session
-    score += (context.uniqueIntents?.length || 0);
-    
-    return score;
-  }
-
   extractSessionId(session) {
-    const sessionParts = session.split('/');
-    return sessionParts[sessionParts.length - 1];
+    return session.split('/').pop();
   }
 
   async getConversationContext(sessionId) {
-    // This would fetch from user conversation history
-    // For now, return mock context
     return {
       conversationLength: 3,
       failureCount: 0,
@@ -282,20 +150,34 @@ class DialogflowWebhookController {
     };
   }
 
-  async logConversation(sessionId, intent, query, response, sentiment, flowType) {
+  async determineFlowType(intentName, parameters, context, sentiment) {
+    const avaTriggers = ['support.escalate', 'complaint.complex', 'order.dispute', 'payment.issue'];
+    if (avaTriggers.includes(intentName) || ['very_negative', 'negative'].includes(sentiment) || context.failureCount >= 2 || this.calculateComplexityScore(parameters, context) > 7) {
+      return 'ava_flow';
+    }
+    return 'regular_ivr';
+  }
+
+  calculateComplexityScore(parameters, context) {
+    let score = Object.keys(parameters).length;
+    score += Math.min(context.conversationLength || 0, 5);
+    score += (context.uniqueIntents?.length || 0);
+    return score;
+  }
+
+  async logConversation(sessionId, intentName, query, response, sentiment, flowType) {
     try {
-      // Log conversation data
-      logger.info('Conversation logged:', {
+      logger.info('Conversation log:', {
         sessionId,
-        intent,
-        query: query.substring(0, 100),
+        intentName,
+        query,
         responseType: response.fulfillmentText ? 'text' : 'rich',
         sentiment,
         flowType,
         timestamp: new Date()
       });
-    } catch (error) {
-      logger.error('Failed to log conversation:', error);
+    } catch (err) {
+      logger.error('Failed to log conversation:', err);
     }
   }
 

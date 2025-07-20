@@ -12,6 +12,7 @@ const SignupPage = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const { signup } = useAuth();
   const navigate = useNavigate();
 
@@ -28,11 +29,13 @@ const SignupPage = () => {
     
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      setShowErrorModal(true);
       return;
     }
 
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
+      setShowErrorModal(true);
       return;
     }
 
@@ -46,9 +49,11 @@ const SignupPage = () => {
         navigate('/');
       } else {
         setError(result.message || 'Signup failed');
+        setShowErrorModal(true);
       }
     } catch (error) {
       setError('An error occurred during signup');
+      setShowErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -56,6 +61,15 @@ const SignupPage = () => {
 
   return (
     <div className="signup-page">
+      {showErrorModal && (
+        <div className="modal-overlay" onClick={() => setShowErrorModal(false)}>
+          <div className="modal-content">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button onClick={() => setShowErrorModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
       <div className="signup-card">
         <div className="signup-header">
           <h1>Create Account</h1>

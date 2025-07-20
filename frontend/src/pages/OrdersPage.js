@@ -101,51 +101,61 @@ const OrdersPage = () => {
           <p>When you place orders, they will appear here.</p>
         </div>
       ) : (
-        <div className="orders-list">
-          {orders.map(order => (
-            <div key={order.orderId} className="order-card">
-              <div className="order-header">
-                <div className="order-id">
-                  <strong>Order #{order.orderId}</strong>
-                </div>
-                <div 
-                  className="order-status"
-                  style={{ backgroundColor: getStatusColor(order.status) }}
-                >
-                  {getStatusLabel(order.status)}
-                </div>
-              </div>
-              
-              <div className="order-details">
-                <div className="order-items">
-                  <h4>Items ({order.items.length})</h4>
-                  {order.items.map((item, index) => (
-                    <div key={index} className="order-item">
-                      <div className="item-info">
-                        <span className="item-name">{item.name}</span>
-                        <span className="item-qty">Qty: {item.quantity}</span>
-                      </div>
-                      <div className="item-price">₹{item.subtotal}</div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="order-summary">
-                  <div className="order-total">
-                    <strong>Total: ₹{order.total}</strong>
-                  </div>
-                  <div className="order-date">
-                    Ordered on {new Date(order.createdAt).toLocaleDateString()}
-                  </div>
-                  {order.estimatedDelivery && (
-                    <div className="estimated-delivery">
-                      Expected delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
-                    </div>
-                  )}
-                </div>
-              </div>
+          <div className="orders-list">
+            {orders.map(order => (
+  <div key={order.orderId} className="order-card">
+    <div className="order-header">
+      <div className="order-id">
+        <strong>Order #{order.orderId}</strong>
+      </div>
+      <div 
+        className="order-status"
+        style={{ backgroundColor: getStatusColor(order.status) }}
+      >
+        {getStatusLabel(order.status)}
+      </div>
+    </div>
+    
+    <div className="order-details">
+      <div className="order-items">
+        <h4>Items ({order.items.length})</h4>
+        {order.items.map((item, index) => (
+          <div key={index} className="order-item">
+            <img
+              src={item.image || 'https://via.placeholder.com/60'}
+              alt={item.name}
+              className="item-image"
+              width={60}
+              height={60}
+              style={{ borderRadius: '8px', marginRight: '12px', objectFit: 'cover' }}
+            />
+            <div className="item-info">
+              <span className="item-name">{item.name}</span>
+              <span className="item-qty">Qty: {item.quantity}</span>
             </div>
-          ))}
+            <div className="item-price">₹{item.subtotal}</div>
+          </div>
+        ))}
+      </div>
+      
+      <div className="order-summary">
+        <div className="order-total">
+          <strong>Total: ₹{order.total}</strong>
+        </div>
+        <div className="order-date">
+          Ordered on {new Date(order.createdAt).toLocaleDateString()}
+        </div>
+        {order.estimatedDelivery && (
+          <div className="estimated-delivery">
+            Expected delivery: {new Date(order.estimatedDelivery).toLocaleDateString()}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+))}
+  
+          
         </div>
       )}
     </div>
