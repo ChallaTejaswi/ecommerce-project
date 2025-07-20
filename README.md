@@ -5,6 +5,20 @@ AI-powered Shopping Assistant with Multi-language Support, Order Tracking, and A
 
 ---
 
+## Deployed URL'S
+Frontend On Vercel
+```bash
+https://ecommerce-project-x8jv.vercel.app/
+```
+Backend On Render
+```bash
+https://ecommerce-project-1-gm35.onrender.com
+```
+Backend Health Check Route
+```bash
+https://ecommerce-project-1-gm35.onrender.com/health
+```
+
 ## Project Overview
 A full-stack conversational shopping assistant for Meesho, featuring:
 - Multi-language chatbot (English, Hindi, Gujarati, Telugu, etc.)
@@ -94,6 +108,22 @@ cd ../frontend && npm start
 ### Flowcharts
 
 #### User Journey
+```mermaid
+flowchart TD
+    A[User interacts with chatbot] --> B{Intent detected}
+    B -->|Product search| C[Backend fetches products]
+    B -->|Order tracking| D[Backend fetches order]
+    B -->|Recommendations| E[Backend fetches suggestions]
+    C --> F[Display product cards in chat]
+    D --> G[Display order details with images]
+    E --> H[Show recommendations in chat]
+    F --> I[User adds to cart]
+    G --> J[User views order status/images]
+    H --> K[User explores recommendations]
+    I --> L[User places order]
+    L -->|Track placed order| D
+
+```
 
 #### Admin Flow (Separate from Chat)
 ```mermaid
