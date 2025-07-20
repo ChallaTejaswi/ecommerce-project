@@ -94,21 +94,6 @@ cd ../frontend && npm start
 ### Flowcharts
 
 #### User Journey
-```mermaid
-flowchart TD
-    A[User interacts with chatbot] --> B{Intent detected}
-    B -->|Product search| C[Backend fetches products]
-    B -->|Order tracking| D[Backend fetches order]
-    B -->|Recommendations| E[Backend fetches suggestions]
-    C --> F[Product cards sent to chat]
-    D --> G[Order details (with images) sent to chat]
-    E --> H[Recommendations sent to chat]
-    F --> I[User adds to cart]
-    G --> J[User views order status/images]
-    H --> K[User explores recommendations]
-    I --> L[User places order]
-    L --> D
-```
 
 #### Admin Flow (Separate from Chat)
 ```mermaid
