@@ -235,7 +235,7 @@ Just speak naturally and I'll help you! 🎙️`,
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001','https://ecommerce-project-x8jv.vercel.app'],
   credentials: true
 }));
 app.use(express.json());
