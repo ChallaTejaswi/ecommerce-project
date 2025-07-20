@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:7654/api';
+const API_BASE_URL = 'https://ecommerce-project-qd3l.onrender.com' || 'http://localhost:7654/api';
 
 class ApiService {
   constructor() {
